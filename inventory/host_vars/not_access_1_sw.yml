@@ -1,0 +1,5 @@
+ansible_host: 10.251.8.103
+ansible_user: admin
+ansible_password: aruba123
+ansible_network_os: network_cli
+

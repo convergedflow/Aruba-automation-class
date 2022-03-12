@@ -1,0 +1,45 @@
+---
+- hosts: access_1_sw
+  roles:
+    - role: arubanetworks.aoscx_role
+  gather_facts: false
+#--- pre 6.2 step 9
+#  vars:
+#    ansible_connection: httpapi
+#    students_vlan:
+#      id: 30
+#      name: STUDENTS_VLAN
+#      ipv4: ['10.0.30.1/24']
+#      interface: 1/1/1
+#    staff_vlan:
+#      id: 40
+#      name: STAFF_VLAN
+
+  tasks:
+    - name: Create VLAN 30 - Students
+      aoscx_vlan:
+        vlan_id: "{{students_vlan.id}}"
+        name: "{{students_vlan.name}}"
+
+    - name: Create VLAN 40 - Staff
+      aoscx_vlan:
+        vlan_id: "{{staff_vlan.id}}"
+        name: "{{staff_vlan.name}}"
+
+    - name: Configure IP VLAN 30
+      aoscx_vlan_interface:
+        vlan_id: "{{students_vlan.id}}"
+        ipv4: "{{students_vlan.ipv4}}"
+
+    - name: Configure Interface 1/1/1 - vlan trunk allowed 30
+      aoscx_l2_interface:
+        interface: "{{students_vlan.interface}}"
+        vlan_mode: trunk
+        vlan_trunks: ["{{students_vlan.id}}", "{{staff_vlan.id}}"]
+        native_vlan_id: "{{students_vlan.id}}"
+#      register: aoscx_l2_interface_std
+
+  #  - name: debug stdout
+   #   debug:
+    #    msg: "{{ aoscx_l2_interface_std.stdout }}"
+  

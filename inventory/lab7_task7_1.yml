@@ -1,0 +1,14 @@
+- hosts: access_1_sw
+  #roles:
+  #  - arubanetworks.aoscx_role
+  collections:
+    - arubanetworks.aoscx
+  vars:
+    ansible_python_interpreter: /home/student/ansible_venv/bin/python3
+    ansible_connection: arubanetworks.aoscx.aoscx
+  gather_facts: no
+  tasks:
+    - name: Create Banner
+      aoscx_banner:
+        banner_type: banner
+        banner: "hello!"

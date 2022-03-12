@@ -1,0 +1,16 @@
+---
+- hosts: access_1_sw
+  gather_facts: False
+  roles:
+    - role: arubanetworks.aoscx_role
+  vars:
+    ansible_connection: httpapi
+  tasks:
+    - name: Create VLAN 30 - Students
+      aoscx_vlan:
+        vlan_id: 30
+        name: STUDENTS_VLAN
+    - name: Create VLAN 40 - Staff
+      aoscx_vlan:
+        vlan_id: 40
+        name: STAFF_VLAN

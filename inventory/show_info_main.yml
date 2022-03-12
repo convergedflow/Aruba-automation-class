@@ -1,0 +1,12 @@
+---
+-
+  aoscx_command:
+    commands:
+      - "sh lldp neighbor-info"
+      - "show mac-address-table"
+  name: "Execute show lldp neighbor and show mac-addres-table"
+  register: command_output
+-
+  debug:
+    msg: "{{ command_output }}"
+  name: "Print command output"

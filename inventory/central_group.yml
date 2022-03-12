@@ -1,0 +1,20 @@
+---
+- hosts: central
+  gather_facts: no
+  roles:
+    - role: arubanetworks.aruba_central_role
+  tasks:
+    - name: Get all the UI and Template Groups on Central
+      central_groups:
+        action: get_groups
+        limit: 20
+        offset: 0
+    - name: Create a new group
+      central_groups:
+        action: create
+        group_name: central_role_test
+        group_attributes:
+          group_password: aruba123
+          template_group:
+            wired: true
+            wireless: true
